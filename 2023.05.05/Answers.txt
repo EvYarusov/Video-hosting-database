@@ -1,0 +1,57 @@
+В рамках БД "видео-хостинг"
+1. Создать и наполинть таблицы reactions и donations.
+
+CREATE TABLE reactions
+	(reaction_id int, created_at timestamp, reaction_value varchar(64), user_id int, video_id int);
+
+CREATE TABLE donations
+	(donation_id int, created_at timestamp, amount decimal(9,2), donator_id int, recipient_id int, commentary varchar(128) );
+
+INSERT INTO reactions (reaction_id, created_at, reaction_value, user_id, video_id)
+VALUES (1, CURRENT_TIMESTAMP, 'thumbs up', 2, 3),
+(2, CURRENT_TIMESTAMP, 'smile', 1, 2),
+(3, CURRENT_TIMESTAMP, 'laugh', 3, 1);
+
+INSERT INTO donations (donation_id, created_at, amount, donator_id, recipient_id, commentary)
+VALUES (1, CURRENT_TIMESTAMP, 51.0, 2, 3, 'it is amazing'),
+(2, CURRENT_TIMESTAMP, 80.5, 1, 2, 'good work man!'),
+(3, CURRENT_TIMESTAMP, 124, 3, 1, 'good luck darling in your beautiful design');
+
+2. Вывести информацию о видео:
+
+--Предварительно наполняем таблицу 
+
+INSERT INTO videos (video_id, created_at, title, duration_secs, link, author_id, description, is_approved)
+VALUES (1, CURRENT_TIMESTAMP, 'The Retuses - Синий вечер (Мастерская - Москва - 08.03.2013)', 276, 
+        'https://youtu.be/63PMg8uXtgM', 2, 'The Retuses - Синий вечер (Мастерская - Москва - 08.03.2013)...', true);
+
+INSERT INTO videos (video_id, created_at, title, duration_secs, link, author_id, description, is_approved)
+VALUES (2, CURRENT_TIMESTAMP, 'Men In Black | First Alien Bust (Tommy Lee Jones)', 321,
+ 		'https://youtu.be/xfZADMWAEvc', 3, 'Agent Kay (Tommy Lee Jones) and his partner chase down an alien camouflaged as an immigrant in the desert.', true);
+
+автор_видео
+название_стрима
+
+SELECT
+	users.username,
+      videos.title
+FROM videos
+JOIN users ON videos.author_id = users.user_id;
+
+Результат: 1.png
+
+3. Вывести информацию о реакциях на стрим #1:
+название_видео
+имя_автора_реакции
+значение_реакции
+
+SELECT
+	videos.title,
+    users.username,
+    reactions.reaction_value
+FROM reactions
+JOIN videos ON reactions.video_id = videos.video_id
+JOIN users ON reactions.user_id = users.user_id
+WHERE videos.video_id = 1;
+
+Результат: 2.png
