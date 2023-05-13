@@ -1,0 +1,44 @@
+1. Вывести ко-во видео и их среднюю продолжительность у автора 1
+
+SELECT
+	COUNT(*) AS number_of_video,
+	AVG(duration_secs) AS average_duration
+FROM videos
+WHERE author_id = 1
+
+Изображение 1 (взял author_id = 2 для наглядности)
+
+2. Вывести среднюю продолжительность видео по всем авторам
+
+SELECT
+	AVG(duration_secs) AS avg_duration_for_all
+FROM videos
+
+Изображение 2
+
+3. Вывести два самых продолжительных видео (название и продолжительность в часах)
+
+SELECT
+	title,
+    duration_secs/3600 AS duration_hours
+FROM videos
+ORDER BY duration_secs DESC
+Limit 2
+
+Изображение 3
+
+4. Вывести сумму всех пожертвований, полученных пользователем 2
+
+SELECT SUM(amount)
+FROM donations
+WHERE recipient_id = 2
+
+Изображение 4
+
+5. Описать схему базы данных "видео-хостинг" с помощью инструмента онлайн проектирования (создать диаграмму)
+
+https://dbdiagram.io/d/645fa00fdca9fb07c40573e7
+
+Изображение 5
+
+
